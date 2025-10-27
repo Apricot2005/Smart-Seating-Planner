@@ -4,7 +4,7 @@ async function getAiSummary(plan, apiKey) {
     const aiSummaryBox = document.getElementById("ai-summary");
     const statusMsg = document.getElementById("status-message");
     
-    // This is the correct Gemini URL
+    // 1. This is the correct Gemini URL
     const GEMINI_API_URL = `https://generativemodels.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const planText = plan.map(s => `Student ${s.id} (${s.subject}) is at Row ${s.row}, Seat ${s.seat}.`).join("\n");
@@ -35,7 +35,7 @@ async function getAiSummary(plan, apiKey) {
 
         const data = await response.json();
         
-        // This is the correct path to the text
+        // 2. This is the correct path to the text
         const summary = data.candidates[0].content.parts[0].text; 
         
         let htmlSummary = summary
@@ -50,7 +50,7 @@ async function getAiSummary(plan, apiKey) {
 
     } catch (error) {
         console.error("Gen AI Error:", error);
-        // This will now show the *specific* error message (like "API key not valid" or "API not enabled")
+        // This will now show the *specific* error message
         aiSummaryBox.innerHTML = `<h3 class="text-xl font-semibold mb-3 text-red-700">🤖 Gen AI Error</h3><p>${error.message}</p>`;
         aiSummaryBox.style.display = "block";
     }
